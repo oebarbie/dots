@@ -1,0 +1,18 @@
+{
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Noctis Lux",
+  "explorer.confirmDragAndDrop": false,
+  "window.menuBarVisibility": "toggle",
+  "explorer.confirmDelete": false,
+  "files.autoSave": "afterDelay",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "editor.minimap.enabled": false,
+  "output.smartScroll.enabled": false,
+  "editor.scrollbar.vertical": "visible",
+  "editor.scrollbar.horizontal": "visible",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "codeium.enableConfig": {
+    "*": true
+  }
+}
