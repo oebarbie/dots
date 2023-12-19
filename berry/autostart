@@ -21,6 +21,7 @@ berryc edge_lock   "true"
 berryc set_font    "Dina-9"
 
 
-# xrandr --output eDP-1 --off && xrandr --output HDMI-1 --primary --mode 1920x1200
+xrandr --output eDP-1 --off && xrandr --output HDMI-1 --primary --mode 1920x1200
 feh --bg-scale $HOME/.config/berry/wallpaper
 parcellite &
+flameshot &
