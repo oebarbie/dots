@@ -13,7 +13,7 @@ map ctrl+t new_tab
 map ctrl+w close_tab
 
 # BEGIN_KITTY_THEME
-# Rosé Pine Dawn
+# Grass
 include current-theme.conf
 # END_KITTY_THEME
 # background #1d1d1d
