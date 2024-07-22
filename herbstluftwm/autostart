@@ -128,7 +128,8 @@ hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
 
 # wallpaper
-feh --bg-scale /home/brb/dots/herbstluftwm/wallpaper.jpg
+# feh --bg-scale /home/brb/dots/herbstluftwm/wallpaper.jpg
+feh --no-fehbg --bg-fill /home/brb/dots/herbstluftwm/wallpaper.jpg
 
 # padding
 hc set window_gap 4
