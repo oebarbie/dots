@@ -17,5 +17,5 @@ foo "herbstluftwm"
 # ln -sf $DOTS_DIR/vscode/settings.json $USER_DIR/.config/Code/User/
 ln -sf $DOTS_DIR/x11/xinitrc $USER_DIR/.xinitrc
 
-cp $DOTS_DIR/x11/30-touchpad.conf /etc/X11/xorg.conf.d/
+cp $DOTS_DIR/x11/*.conf /etc/X11/xorg.conf.d/
 
