@@ -94,7 +94,7 @@
 2. `sudo mkdir /mnt/my_pleer` создаем папочку для нашего мышонка
 3. `sudo mount /dev/sdbX /mnt/my_pleer` монтируем плеер в папку (монтируем раздел, а не "название флешки"!)
 4. `sudo cp (песенки) /mnt/my_pleer` копируем туда песенки
-5. `sudo umount /mnt` не забываем анмаунтить
+5. `sudo umount /mnt` не забываем анмаунтить  
 _~little story from my bro <3_
 
 **tar**
