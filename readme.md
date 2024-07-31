@@ -2,11 +2,11 @@
 
 1. make a bootable usb
    - archlinux.org ➜ download ➜ ur country
-   - download iso file, sha256sums.txt
+   - download iso file, *sums.txt
    - `sha256sums -c sha256sums.txt` signature check
 
 2. iso to usb
-   - `paru -S ventoy-bin`
+   - `paru -S ventoy-bin` or obtain ventoy from aur
    - `sudo ventoy -i /dev/sdb`
    - `sudo mount /dev/sdb1 /mnt`
    - `cp {file}.iso /mnt`
@@ -16,57 +16,65 @@
    - reboot + f2
    - boot: change order
 
-4. details*
-   - rmmod pcspkr
-   - setfont ter-132n
+4. details
+   - `rmmod pcspkr`
+   - `setfont ter-132n`
 
 5. internet (wifi/ethernet)
-   - ip a
+   - `ip a`
 
 6. disk layout
    - `lsblk` to see disk layout
-   - `fdisk /dev/sda`
-   - `g` - create empty gpt disk, `n` - new, `w` - write
-   - 1 - +1G. 2 - (enter)
+   - `fdisk /dev/sda` (`g` - guid, `n` - new, `w` - write)
    - `fdisk /dev/sda` ➜ g ➜ n ➜ enter ➜ enter ➜ +1G ➜ .. ➜ n ➜ enter ➜ enter ➜ enter .. ➜ w
-   - create files systems
-   - `mkfs.fat -F32 /dev/sda1`
-   - `mkfs.ext4 /dev/sda2`
-   - mount file systems
-   - `mount mount /dev/sda2 /mnt`
-   - `mount -m /dev/sda1 /mnt/boot`
+   - `mkfs.fat -F32 /dev/sda1`, `mkfs.ext4 /dev/sda2` create file systems
+   - `mount /dev/sda2 /mnt`, `mount -m /dev/sda1 /mnt/boot` mount file systems
 
 7. packages installation
-   - `pacstrap /mnt linux linux-firmware base base-devel networkmanager grub efibootmgr fish helix
+   - `pacstrap /mnt linux linux-firmware base base-devel networkmanager grub efibootmgr fish helix`
 
-   - `cp /usr/share/kbd/console-fonts/ter-132n /mnt/usr/share/kbd/consolefonts`
-
-8. disk layout 2
-   - `genfstab -U /mnt`
+8. finish disk layout
    - `genfstab -U /mnt > /mnt/etc/fstab`
+   - `cp /usr/share/kbd/consolefonts/ter-132n.psf.gz /mnt/usr/share/kbd/consolefonts` copy font
    - `arch-chroot /mnt`
    - `fish`
 
+9. user
    - `echo "comp" > /etc/hostname`
-   - `useradd -mG wheel -s $(which fish) brb`
+   - `useradd -mG wheel -s $(which fish) "brb"`
    - `passwd` for root
    - `passwd brb`
-   - visudo
-   - `EDITOR=helix visudo`(uncomment last paragraph to allow members of wheel to execite any command)
-   - echo blacklist pcspkr > /etc/modprobe.d/nobeep.conf
+   - `EDITOR=helix visudo`(uncomment last paragraph to allow members of wheel to execute any command)
 
-9. grub
+10. grub
     - `grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot`
     - `grub-mkconfig -o /boot/grub/grub.cgf`
   
-    - go out of chroot, fish (ctrl D * 2)
-
+    - exit the chroot, fish (ctrl D * 2)
     - umount -R /mnt
     - shutdown now
 
 # postinstallation
 
-## printer
+## internet 
+1. network manager
+   - `ip a`
+   - `systemctl status NetworkManager.service`
+   - `systemctl enable --now NetworkManager.service`
+2. wifi
+   - `nmcli d w c "name" --ask` (`d` - device, `w` - watch list, `c` - connect)
+
+## graphical interface
+- download paru-bin (aur helper + wrapper)
+- `git clone https://aur.archlinux.org/paru-bin.git` ➜ cd ➜ makepkg -si
+- `paru -S xorg-{server, xinity} herbstluftwm kitty ttf-jetbrains-mono-nerd`
+
+## repo
+- `git clone` dots
+- `sudo ./script.sh`
+- `startx`
+
+## printer [more info](https://unix.stackexchange.com/questions/359531/installing-hp-printer-driver-for-arch-linux)
 1. `paru -S cups` install [cups](https://en.wikipedia.org/wiki/CUPS)
 2. `sudo systemctl enable --now cups` enable cups
 3. `paru -S hplip` install [hp linux imaging and printing](https://en.wikipedia.org/wiki/HP_Linux_Imaging_and_Printing)
@@ -79,34 +87,23 @@
 - `flameshot` for screenshots
 - `xorg-xrandr` for monitors
 - `noto-fonts-cjk` for characters
-- `paru -S pulseaudio pulseaudio-alsa pavucontrol` for sound
+- `pulseaudio pulseaudio-alsa pavucontrol` for sound
 
-`paru -S noto-fonts{,-cjk,-emoji,-extra} flameshot xorg-xrandr`
+`paru -S noto-fonts{,-cjk,-emoji,-extra} flameshot xorg-xrandr pulseaudio pulseaudio-alsa pavucontrol`
 
-## lsblk
+## work with usb devices
 
-1. создаем папочку для нашего мышонка:
-`sudo mkdir /mnt/my_pleer`
-2. монтируем плеер в папку (монтируем раздел, а не "название флешки"!)
-`sudo mount /dev/sdbX /mnt/my_pleer_bitch`
-3. копируем туда песенки 
-`sudo cp (песенки) /mnt/my_pleer`
-4. незабываем анмаунтить
-`sudo umount /mnt`
-
-## wifi
-
-nmtui
-nmcli device wifi show-password
-nmcli --help
-nmcli r wifi on
+**lsblk**
+1. `sudo mkdir /mnt/my_pleer` создаем папочку для нашего мышонка:  
+2. `sudo mount /dev/sdbX /mnt/my_pleer` монтируем плеер в папку (монтируем раздел, а не "название флешки"!)
+3. `sudo cp (песенки) /mnt/my_pleer` копируем туда песенки
+4. `sudo umount /mnt` не забываем анмаунтить
+_~little story from my bro <3_
 
 ## tar
-в фише пишешь алиас tar <--> bsdtar (tar от BSD лучше чем от GNU)
+`tar tf` view the content of the archive
+`tar xf` export the content of the archive
+`tar xf 1.zip -C folder` export to a directory
 
-tar tf -- посмотреть содержимое архива
-tar xf -- экспортировать
-tar xf 1.zip -C folder -- экспортировать в папку
-
-tar cf 1.zip photo1 photo2 -- создать архив с фотками
-tar cf 1.tar.gz photo1 photo2 -- создать такой же архив, только в более родном линуксу формате
+`tar cf 1.zip photo1 photo2` create an archive with photos 
+`tar cf 1.tar.gz photo1 photo2` create the same archive, but in a more native linux format
