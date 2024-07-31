@@ -86,6 +86,7 @@
 - `xorg-xrandr` for monitors
 - `noto-fonts-cjk` for characters
 - `pulseaudio pulseaudio-alsa pavucontrol` for sound
+- `fc-cache -vf` build font information cache files
 
 `paru -S noto-fonts{,-cjk,-emoji,-extra} flameshot xorg-xrandr pulseaudio pulseaudio-alsa pavucontrol`
 
