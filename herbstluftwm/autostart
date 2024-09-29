@@ -13,6 +13,8 @@ hc emit_hook reload
 hc keyunbind --all
 Mod=Mod4
 
+hc keybind $Mod-v spawn nmcli connection up barbara-laptop
+hc keybind $Mod-Shift-v spawn nmcli connection down barbara-laptop
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-w close
